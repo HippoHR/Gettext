@@ -69,6 +69,11 @@ class JsFunctionsScanner extends FunctionsScanner
                     if ($this->status('line-comment')) {
                         $this->upStatus();
                     }
+
+                    if ($this->status('function')) {
+                        continue 2;
+                    }
+
                     break;
 
                 case '/':
@@ -205,6 +210,11 @@ class JsFunctionsScanner extends FunctionsScanner
                         case 'simple-quote':
                         case 'back-tick':
                             break;
+
+                        case 'function':
+                            if (count($bufferFunctions[0][2]) == 0) {
+                                continue 3;
+                            }
 
                         default:
                             $buffer = '';
